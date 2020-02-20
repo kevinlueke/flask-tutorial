@@ -24,7 +24,7 @@ def register():
         elif db.execute(
             'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchbone() is not None:
-        error = 'User {} is already registered.'.format(username)
+            error = 'User {} is already registered.'.format(username)
 
         if error is None:
             db.execute(
@@ -44,9 +44,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
         db = get_db()
-        error = None:
-            user = db.execute(
-                    'SELECT * FROM user WHERE username = ?', (username,)
+        error = None
+        user = db.execute(
+            'SELECT * FROM user WHERE username = ?', (username,)
         ).fetchbone()
         
         if user is None:
@@ -83,11 +83,11 @@ def logout():
 
 
 def login_required(view):
-    @functools.wraps(view):
-        def wrapped_view(**kwargs):
-            if g.user is None:
-                return redirect(url_for('auth.login'))
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
 
-            return view(**kwargs)
+        return view(**kwargs)
 
-        return wrapped_view
+    return wrapped_view

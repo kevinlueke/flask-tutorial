@@ -71,11 +71,11 @@ def get_post(id, check_author=True):
 #    ).fetchone()
 #    return post
 
-#@bp.route('/<int:id>/view')
-#def view(id):
-#    post = get_post_view(id)
-#
-#    return render_template('blog/view.html', post=post)
+@bp.route('/<int:id>/view')
+def view_post(id):
+    post = get_post(id, check_author=False)
+
+    return render_template('blog/view-post.html', post=post)
 
 
 

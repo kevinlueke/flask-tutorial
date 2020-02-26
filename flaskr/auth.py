@@ -23,7 +23,7 @@ def register():
             error = 'Password is required.'
         elif db.execute(
             'SELECT id FROM user WHERE username = ?', (username,)
-        ).fetchbone() is not None:
+        ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
 
         if error is None:
@@ -47,7 +47,7 @@ def login():
         error = None
         user = db.execute(
             'SELECT * FROM user WHERE username = ?', (username,)
-        ).fetchbone()
+        ).fetchone()
         
         if user is None:
             error = 'Incorrect username.'
@@ -73,7 +73,7 @@ def load_logged_in_user():
     else:
         g.user = get_db().execute(
                 'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchbone()
+        ).fetchone()
 
 
 @bp.route('/logout')
